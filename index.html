@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Happy Birthday Anandita</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #fff0f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .heart-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    z-index: 2;
+  }
+
+  .heart {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: #ff4d6d;
+    top: 100px;
+    left: 100px;
+    transform: rotate(-45deg);
+    animation: float 4s ease-in-out infinite, pulse 1.5s infinite;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: #ff4d6d;
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .heart::before {
+    top: -100px;
+    left: 0;
+  }
+
+  .heart::after {
+    top: 0;
+    left: 100px;
+  }
+
+  .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%) rotate(45deg);
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    width: 200px;
+    line-height: 1.5;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: rotate(-45deg) translateY(0);
+    }
+    50% {
+      transform: rotate(-45deg) translateY(-10px);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.6);
+      transform: rotate(-45deg) scale(1);
+    }
+    50% {
+      box-shadow: 0 0 20px 10px rgba(255, 77, 109, 0.4);
+      transform: rotate(-45deg) scale(1.05);
+    }
+  }
+
+  /* Confetti styles */
+  .confetti, .flower {
+    position: fixed;
+    top: -20px;
+    pointer-events: none;
+    will-change: transform;
+    animation-timing-function: linear;
+    z-index: 10;
+  }
+
+  .confetti {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  @keyframes fallConfetti {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Flower styles */
+  .flower {
+    width: 18px;
+    height: 18px;
+  }
+
+  .flower .center {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #ff69b4;
+    border-radius: 50%;
+    top: 6px;
+    left: 6px;
+    z-index: 10;
+  }
+
+  .flower .petal {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #ffb6c1;
+    border-radius: 50%;
+  }
+
+  .flower .petal1 { top: 0; left: 6px; }
+  .flower .petal2 { top: 6px; left: 0; }
+  .flower .petal3 { top: 6px; left: 12px; }
+  .flower .petal4 { top: 12px; left: 6px; }
+</style>
+</head>
+<body>
+  <div class="heart-container">
+    <div class="heart">
+      <div class="text">
+        HAPPYY BIRTHDAYY<br>ANANDITAAA 🥳🥳
+      </div>
+    </div>
+  </div>
+
+<script>
+  const confettiColors = ['#FF3F8E', '#04C2C9', '#2E55C1', '#FFB400', '#FF4D6D'];
+
+  // Create confetti pieces
+  function createConfettiPiece() {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.width = confetti.style.height = (Math.random() * 7 + 7) + 'px';
+    confetti.style.opacity = (Math.random() * 0.5 + 0.5).toFixed(2);
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    confetti.style.animationName = 'fallConfetti';
+    document.body.appendChild(confetti);
+    confetti.addEventListener('animationend', () => confetti.remove());
+  }
+
+  // Create flower pieces
+  function createFlowerPiece() {
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+    flower.style.left = Math.random() * window.innerWidth + 'px';
+    flower.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    flower.style.animationName = 'fallConfetti';
+
+    // Add petals
+    for(let i=1; i<=4; i++) {
+      const petal = document.createElement('div');
+      petal.classList.add('petal', `petal${i}`);
+      flower.appendChild(petal);
+    }
+
+    // Add center
+    const center = document.createElement('div');
+    center.classList.add('center');
+    flower.appendChild(center);
+
+    document.body.appendChild(flower);
+
+    flower.addEventListener('animationend', () => flower.remove());
+  }
+
+  // More frequent creation for more confetti and flowers
+  setInterval(() => {
+    createConfettiPiece();
+    createConfettiPiece();
+    createFlowerPiece();
+  }, 100);
+
+</script>
+
+</body>
+</html>
